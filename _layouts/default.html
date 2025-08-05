@@ -28,17 +28,29 @@
                         <span class="logo-text">{{ site.title }}</span>
                     </a>
                     
-                    <nav class="nav">
-                        <a href="{{ '/' | relative_url }}" class="nav-link {% if page.url == '/' %}active{% endif %}">Home</a>
-                        <a href="{{ '/about' | relative_url }}" class="nav-link {% if page.url == '/about/' %}active{% endif %}">Syllabus</a>
-                        <a href="https://github.gatech.edu/mmoghaddam3/XRE" class="nav-link" target="_blank">GitHub</a>
-                    </nav>
-                    
-                    <button class="mobile-menu-toggle" aria-label="Toggle navigation">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </button>
+                    <div class="header-actions">
+                        <nav class="nav">
+                            <a href="{{ '/' | relative_url }}" class="nav-link {% if page.url == '/' %}active{% endif %}">Home</a>
+                            <a href="{{ '/about' | relative_url }}" class="nav-link {% if page.url == '/about/' %}active{% endif %}">Syllabus</a>
+                            <a href="https://github.gatech.edu/mmoghaddam3/XRE" class="nav-link" target="_blank">GitHub</a>
+                        </nav>
+                        
+                        <!-- Theme Toggle Button -->
+                        <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+                            <div class="theme-toggle-track">
+                                <div class="theme-toggle-thumb">
+                                    <span class="theme-icon light-icon">☀️</span>
+                                    <span class="theme-icon dark-icon">🌙</span>
+                                </div>
+                            </div>
+                        </button>
+                        
+                        <button class="mobile-menu-toggle" aria-label="Toggle navigation">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </header>
