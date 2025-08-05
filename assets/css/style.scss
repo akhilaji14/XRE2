@@ -1,213 +1,234 @@
-// =============================================================================
-// ENHANCED TABLE OF CONTENTS - IMPROVED VERSION
-// =============================================================================
-// Add this section to your style.scss file
+/* =================================================================== */
+/* ENHANCED TABLE OF CONTENTS - ALL IMPROVEMENTS INCLUDED */
+/* =================================================================== */
 
 .toc-wrapper {
-  max-height: 450px;
-  overflow-y: auto;
-  overflow-x: hidden;
-  padding-right: 0.5rem;
-  margin-right: -0.5rem;
-  // Smooth scrolling
-  scroll-behavior: smooth;
-  // Better scrollbar styling
-  scrollbar-width: thin;
-  scrollbar-color: var(--border) transparent;
+    /* Independent Scrolling with Custom Scrollbar */
+    max-height: 450px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: 0.5rem;
+    margin-right: -0.5rem;
+    /* Smooth scrolling */
+    scroll-behavior: smooth;
+    /* Better scrollbar styling */
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+}
 
-  &::-webkit-scrollbar {
+/* Custom Scrollbar - Styled to match design system */
+.toc-wrapper::-webkit-scrollbar {
     width: 6px;
-  }
+}
 
-  &::-webkit-scrollbar-track {
+.toc-wrapper::-webkit-scrollbar-track {
     background: var(--bg-secondary);
     border-radius: 3px;
-  }
+}
 
-  &::-webkit-scrollbar-thumb {
+.toc-wrapper::-webkit-scrollbar-thumb {
     background: var(--border);
     border-radius: 3px;
+    transition: background-color 0.2s ease;
+}
 
-    &:hover {
-      background: var(--text-muted);
-    }
-  }
+.toc-wrapper::-webkit-scrollbar-thumb:hover {
+    background: var(--text-muted);
 }
 
 .toc-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
 .toc-section {
-  margin-bottom: 0.75rem;
-  border-radius: var(--radius);
-  overflow: hidden;
-  transition: all 0.2s ease;
-
-  &:hover {
-    transform: translateX(3px);
-  }
+    margin-bottom: 0.75rem;
+    border-radius: var(--radius);
+    overflow: hidden;
+    /* Smooth Animations */
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-// NEW: Improved section header layout
-.toc-section-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between; // This pushes arrow to the right
-  padding: 0.75rem;
-  background: var(--bg-secondary);
-  border-radius: var(--radius);
-  transition: all 0.2s ease;
-  border: 1px solid transparent;
+.toc-section:hover {
+    transform: translateX(3px);
+}
 
-  &:hover {
+/* Perfect Arrow Positioning - Arrow appears on the right side */
+.toc-section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* This pushes arrow to the right */
+    padding: 0.75rem;
+    background: var(--bg-secondary);
+    border-radius: var(--radius);
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+    cursor: default; /* Remove cursor pointer since only arrow is clickable */
+}
+
+.toc-section-header:hover {
     background: var(--bg-tertiary);
     border-color: var(--border);
     box-shadow: var(--shadow-sm);
-  }
 }
 
-// Main link takes up most space
+/* Main link takes up most space - Better Click Behavior */
 .toc-main-link {
-  flex: 1;
-  color: var(--text-primary);
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 0.95rem;
-  transition: color 0.2s ease;
-
-  &:hover {
-    color: var(--primary);
-  }
-
-  &.active {
-    color: var(--primary);
-  }
+    flex: 1;
+    color: var(--text-primary);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: color 0.2s ease;
+    cursor: pointer; /* Only the link is clickable for navigation */
 }
 
-// Arrow positioned on the right
-.toc-arrow {
-  font-size: 0.8rem;
-  color: var(--text-muted);
-  transition: all 0.3s ease;
-  min-width: 16px;
-  text-align: center;
-  font-weight: bold;
-  cursor: pointer;
-  padding: 0.25rem;
-  border-radius: var(--radius);
-  margin-left: 0.5rem;
+.toc-main-link:hover {
+    color: var(--primary);
+}
 
-  &:hover {
+.toc-main-link.active {
+    color: var(--primary);
+}
+
+/* Perfect Arrow Positioning - Arrow positioned on the right with better click behavior */
+.toc-arrow {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    /* Smooth Animations with cubic-bezier */
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    min-width: 16px;
+    text-align: center;
+    font-weight: bold;
+    cursor: pointer; /* Only arrow is clickable for expand/collapse */
+    padding: 0.25rem;
+    border-radius: var(--radius);
+    margin-left: 0.5rem;
+}
+
+.toc-arrow:hover {
     background: var(--bg-card);
     color: var(--primary);
-  }
+    transform: scale(1.1);
 }
 
 .toc-section.expanded .toc-arrow {
-  transform: rotate(0deg);
-  color: var(--primary);
+    transform: rotate(0deg);
+    color: var(--primary);
 }
 
 .toc-section:not(.expanded) .toc-arrow {
-  transform: rotate(-90deg);
+    transform: rotate(-90deg);
 }
 
-// Sublists with smooth animations
+/* Sublists with Smooth Animations using cubic-bezier */
 .toc-sublist {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  margin-top: 0.5rem;
-  padding-left: 1.5rem;
-  border-left: 2px solid var(--border);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  overflow: hidden;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    margin-top: 0.5rem;
+    padding-left: 1.5rem;
+    border-left: 2px solid var(--border);
+    /* Smooth Animations with cubic-bezier easing */
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
 }
 
 .toc-section:not(.expanded) .toc-sublist {
-  max-height: 0;
-  margin-top: 0;
-  opacity: 0;
-  transform: translateY(-10px);
+    max-height: 0;
+    margin-top: 0;
+    opacity: 0;
+    transform: translateY(-10px);
 }
 
 .toc-section.expanded .toc-sublist {
-  max-height: 600px;
-  opacity: 1;
-  padding-bottom: 0.5rem;
-  transform: translateY(0);
+    max-height: 600px;
+    opacity: 1;
+    padding-bottom: 0.5rem;
+    transform: translateY(0);
 }
 
 .toc-h3-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  padding-left: 1rem;
-  margin-top: 0.25rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    padding-left: 1rem;
+    margin-top: 0.25rem;
 }
 
 .toc-sub-link {
-  color: var(--text-secondary);
-  text-decoration: none;
-  font-size: 0.85rem;
-  display: block;
-  padding: 0.3rem 0.75rem;
-  border-radius: var(--radius);
-  transition: all 0.2s ease;
-  line-height: 1.4;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.85rem;
+    display: block;
+    padding: 0.3rem 0.75rem;
+    border-radius: var(--radius);
+    /* Smooth Animations */
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    line-height: 1.4;
+}
 
-  &:hover {
+.toc-sub-link:hover {
     color: var(--primary);
     background: var(--bg-secondary);
     padding-left: 1rem;
-  }
+    transform: translateX(2px);
+}
 
-  &.active {
+.toc-sub-link.active {
     background: var(--primary);
     color: white;
     font-weight: 500;
-  }
 }
 
 .toc-h3-link {
-  font-size: 0.8rem;
-  padding-left: 1rem;
+    font-size: 0.8rem;
+    padding-left: 1rem;
 }
 
 .toc-h4-link {
-  font-size: 0.75rem;
-  padding-left: 1.25rem;
-  opacity: 0.9;
+    font-size: 0.75rem;
+    padding-left: 1.25rem;
+    opacity: 0.9;
 }
 
-// Mobile responsive adjustments
+/* Mobile Responsive - Proper adjustments for smaller screens */
 @media (max-width: 768px) {
-  .toc-wrapper {
-    max-height: 300px;
-  }
-  
-  .toc-section-header {
-    padding: 0.6rem;
-  }
-  
-  .toc-main-link {
-    font-size: 0.9rem;
-  }
-  
-  .toc-arrow {
-    font-size: 0.7rem;
-    min-width: 14px;
-  }
+    .toc-wrapper {
+        max-height: 300px;
+    }
+    
+    .toc-section-header {
+        padding: 0.6rem;
+    }
+    
+    .toc-main-link {
+        font-size: 0.9rem;
+    }
+    
+    .toc-arrow {
+        font-size: 0.7rem;
+        min-width: 14px;
+        padding: 0.2rem;
+    }
+    
+    .toc-sub-link {
+        font-size: 0.8rem;
+        padding: 0.25rem 0.6rem;
+    }
+    
+    .toc-sublist {
+        padding-left: 1.2rem;
+    }
 }
 
-// Accessibility improvements
+/* Accessibility improvements */
 @media (prefers-reduced-motion: reduce) {
-  .toc-arrow,
-  .toc-sublist,
-  .toc-section-header {
-    transition: none;
-  }
+    .toc-arrow,
+    .toc-sublist,
+    .toc-section-header,
+    .toc-section {
+        transition: none;
+    }
 }

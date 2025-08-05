@@ -1,7 +1,6 @@
 // =============================================================================
 // ENHANCED TABLE OF CONTENTS (IMPROVED VERSION WITH BETTER ARROW POSITIONING)
 // =============================================================================
-// Replace the existing generateEnhancedTableOfContents function in main.js
 
 function generateEnhancedTableOfContents() {
     const tocContent = document.getElementById('toc-content');
@@ -59,7 +58,7 @@ function generateEnhancedTableOfContents() {
             currentSubList.className = 'toc-sublist';
             li.appendChild(currentSubList);
             
-            // Add click handler for collapsing/expanding (only on arrow)
+            // Better Click Behavior: Only the arrow is clickable for expand/collapse
             arrow.addEventListener('click', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
@@ -73,6 +72,11 @@ function generateEnhancedTableOfContents() {
                     li.classList.add('expanded');
                     arrow.innerHTML = '▼';
                 }
+            });
+            
+            // Allow clicking the title to navigate while preventing expand/collapse
+            link.addEventListener('click', function(e) {
+                e.stopPropagation(); // Don't trigger arrow click
             });
             
             // Start expanded
