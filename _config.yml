@@ -24,12 +24,12 @@ description: "A comprehensive, hands-on course focused on the design, engineerin
 # These settings tell Jekyll how to construct URLs for your site.
 # Critical for proper asset loading (CSS, JS, images) and navigation links.
 
-baseurl: "/XRE"
+baseurl: "/XRE2"
 # The subpath of your site, e.g. /blog for github.io/username/blog
 # Must match your GitHub repository name exactly
 # Used by Jekyll to build correct asset paths: /XRE/assets/css/style.css
 
-url: "https://mohsen-moghaddam.github.io"
+url: "https://akhilaji14.github.io/"
 # The base hostname and protocol for your site
 # For GitHub Pages, this is always https://username.github.io
 # Used for canonical URLs and absolute links
