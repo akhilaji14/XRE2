@@ -1,0 +1,103 @@
+---
+layout: default
+---
+
+<div class="page-wrapper">
+    <div class="container">
+        <div class="page-layout">
+            <!-- Sidebar Navigation -->
+            <aside class="sidebar">
+                <div class="sidebar-content">
+                    <div class="toc">
+                        <h3>Table of Contents</h3>
+                        <div id="toc-content"></div>
+                    </div>
+                    
+                    <div class="section-nav">
+                        {% assign current_section = page.title | slice: 0, 1 %}
+                        {% for section in site.nav_sections %}
+                            {% if section.prefix == current_section %}
+                            <h4>{{ section.icon }} {{ section.title }}</h4>
+                            <ul class="nav-list">
+                                {% for page_name in section.pages %}
+                                    {% assign page_file = page_name | append: '.md' %}
+                                    {% for doc in site.docs %}
+                                        {% if doc.name == page_file %}
+                                        <li>
+                                            <a href="{{ doc.url | relative_url }}" 
+                                               class="nav-link {% if doc.url == page.url %}active{% endif %}">
+                                                {{ doc.title }}
+                                            </a>
+                                        </li>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endfor %}
+                            </ul>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <div class="content">
+                <article class="page-content">
+                    <header class="page-header">
+                        <h1 class="page-title">{{ page.title }}</h1>
+                        {% if page.excerpt %}
+                        <p class="page-excerpt">{{ page.excerpt }}</p>
+                        {% endif %}
+                    </header>
+
+                    <div class="prose">
+                        {{ content }}
+                    </div>
+
+                    <!-- Page Navigation -->
+                    <nav class="page-nav">
+                        {% assign current_section = page.title | slice: 0, 1 %}
+                        {% for section in site.nav_sections %}
+                            {% if section.prefix == current_section %}
+                                {% assign section_pages = section.pages %}
+                                {% for page_name in section_pages %}
+                                    {% assign page_file = page_name | append: '.md' %}
+                                    {% for doc in site.docs %}
+                                        {% if doc.name == page_file and doc.url == page.url %}
+                                            {% assign current_index = forloop.index0 %}
+                                            {% break %}
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endfor %}
+                                
+                                {% if current_index > 0 %}
+                                    {% assign prev_page_name = section_pages[current_index-1] | append: '.md' %}
+                                    {% for doc in site.docs %}
+                                        {% if doc.name == prev_page_name %}
+                                        <a href="{{ doc.url | relative_url }}" class="page-nav-link prev">
+                                            <span class="nav-label">Previous</span>
+                                            <span class="nav-title">{{ doc.title }}</span>
+                                        </a>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+                                
+                                {% assign next_index = current_index | plus: 1 %}
+                                {% if next_index < section_pages.size %}
+                                    {% assign next_page_name = section_pages[next_index] | append: '.md' %}
+                                    {% for doc in site.docs %}
+                                        {% if doc.name == next_page_name %}
+                                        <a href="{{ doc.url | relative_url }}" class="page-nav-link next">
+                                            <span class="nav-label">Next</span>
+                                            <span class="nav-title">{{ doc.title }}</span>
+                                        </a>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                    </nav>
+                </article>
+            </div>
+        </div>
+    </div>
+</div>

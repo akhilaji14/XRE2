@@ -1,0 +1,227 @@
+# =============================================================================
+# JEKYLL CONFIGURATION FILE FOR XRE WIKI
+# =============================================================================
+# This file controls how Jekyll builds and serves your static website.
+# Jekyll is a static site generator that converts markdown files to HTML.
+# Changes to this file require a restart of the local Jekyll server.
+
+# =============================================================================
+# SITE METADATA
+# =============================================================================
+# These values appear in your site's HTML <title>, meta tags, and throughout
+# your templates. They're used for SEO and social media sharing.
+
+title: "XR for Engineering"
+# The main title of your website, appears in browser tabs and search results
+
+description: "A comprehensive, hands-on course focused on the design, engineering, and deployment of interactive AR/VR applications using Unity to address real-world engineering challenges."
+# A brief description of your site for search engines and social media previews
+# Keep this under 160 characters for optimal SEO
+
+# =============================================================================
+# URL CONFIGURATION
+# =============================================================================
+# These settings tell Jekyll how to construct URLs for your site.
+# Critical for proper asset loading (CSS, JS, images) and navigation links.
+
+baseurl: "/XRE"
+# The subpath of your site, e.g. /blog for github.io/username/blog
+# Must match your GitHub repository name exactly
+# Used by Jekyll to build correct asset paths: /XRE/assets/css/style.css
+
+url: "https://mohsen-moghaddam.github.io"
+# The base hostname and protocol for your site
+# For GitHub Pages, this is always https://username.github.io
+# Used for canonical URLs and absolute links
+
+# Combined, your full site URL becomes: https://akhilaji14.github.io/XRE
+
+# =============================================================================
+# MARKDOWN AND SYNTAX HIGHLIGHTING
+# =============================================================================
+# Configure how Jekyll processes markdown files and highlights code blocks
+
+markdown: kramdown
+# The markdown processor Jekyll should use
+# kramdown: GitHub-flavored markdown with table support, footnotes, etc.
+# Other options: redcarpet, CommonMark (but kramdown is recommended)
+
+highlighter: rouge
+# Syntax highlighter for code blocks in markdown
+# rouge: Pure Ruby highlighter, GitHub Pages compatible
+# Supports 100+ programming languages including C#, JavaScript, Python
+
+# =============================================================================
+# SASS/SCSS CONFIGURATION
+# =============================================================================
+# Settings for processing your stylesheet files
+
+sass:
+  sass_dir: _sass
+  # Directory where Jekyll looks for @import files
+  # Allows you to split CSS into multiple files: @import "variables", "layout"
+  
+  style: compressed
+  # Output style for compiled CSS
+  # compressed: Minified CSS (smallest file size, best for production)
+  # expanded: Human-readable CSS (better for debugging)
+  # Other options: nested, compact
+
+# =============================================================================
+# PLUGINS
+# =============================================================================
+# Jekyll plugins extend functionality. These are GitHub Pages compatible.
+
+plugins:
+  - jekyll-feed
+    # Generates an RSS/Atom feed at /feed.xml
+    # Allows users to subscribe to your content updates
+    
+  - jekyll-sitemap
+    # Automatically generates sitemap.xml for search engines
+    # Helps Google/Bing index all your pages
+    
+  - jekyll-seo-tag
+    # Adds SEO meta tags to your <head> section
+    # Includes Open Graph, Twitter Cards, JSON-LD structured data
+
+# =============================================================================
+# COLLECTIONS CONFIGURATION
+# =============================================================================
+# Collections allow you to group related content (alternative to regular pages)
+# Currently disabled in favor of simpler root-level pages
+
+# collections:
+#   docs:
+#     output: true        # Generate individual pages for each document
+#     permalink: /:name/  # URL pattern: /filename-without-extension/
+
+# We're using root-level pages instead of collections for simplicity
+# This means your .md files live in the root directory, not in _docs/
+
+# =============================================================================
+# DEFAULT FRONT MATTER
+# =============================================================================
+# Apply default YAML front matter to files based on their location/type
+# Saves you from manually adding layout: page to every markdown file
+
+defaults:
+  - scope:
+      path: "*.md"        # Apply to all .md files in root directory
+    values:
+      layout: "page"      # Automatically use the 'page' layout
+      # This means every .md file gets layout: page without you typing it
+
+# =============================================================================
+# CUSTOM SITE DATA
+# =============================================================================
+# Custom data structures for your site's navigation and theming
+# These are accessible in templates as {{ site.nav_sections }} etc.
+
+# Navigation structure for the homepage
+# Each section represents a major topic area in your XR course
+nav_sections:
+  
+  # Section A: Foundational XR Concepts
+  - title: "Architecting XR for Engineering"    # Display name for the section
+    prefix: "A"                               # Letter prefix for organizing
+    #icon: "🚀"                               # Emoji icon for visual appeal
+    color: "#6366f1"                         # Brand color (indigo-500)
+    pages:                                   # List of pages in this section
+      - "A1.-Introduction-to-XRE"  # Filename without .md extension
+      - "A2.-Human-Centered-Design-for-XR"
+  
+  # Section B: 3D Development Fundamentals  
+  - title: "Building Real-Time 3D Worlds"
+    prefix: "B"
+    #icon: "🌐"
+    color: "#8b5cf6"                         # Purple-500
+    pages:
+      - "B1.-Game-Engines"    # Note: Special dash character ‐
+      - "B2.-Rendering"
+      - "B3.-Physics-&-Animation"
+      - "B4.-Audio-&-User-Interface"
+  
+  # Section C: Programming for XR
+  - title: "C# for Custom XR Experiences"
+    #prefix: "C"
+    icon: "💻"
+    color: "#06b6d4"                         # Cyan-500
+    pages:
+      - "C1.-Fundamentals-of-Csharp"       # Note: "CSharp" instead of "C#"
+      - "C2.-Decision-Logic-&-Methods"         # URL-safe filename (no # symbol)
+      - "C3.-Collections-&-Object-Orientation"
+      - "C4.-MonoBehaviour"
+      - "C5.-Namespaces"
+  
+  # Section D: Virtual Reality Development
+  - title: "Developing Virtual Worlds in VR"
+    prefix: "D"
+    #icon: "🥽"                               # VR goggles emoji
+    color: "#10b981"                         # Emerald-500
+    pages:
+      - "D1.-Fundamentals-of-VR"
+      - "D2.-Navigating-in-VR"
+      - "D3.-Grabbing-Objects-in-VR"
+      - "D4.-Attaching-Objects-in-VR"
+      - "D5.-Activating-Objects-in-VR"
+      - "D6.-Touch-and-Sound-in-VR"
+      - "D7.-User-Interfaces-in-VR"
+  
+  # Section E: Augmented Reality Development  
+  - title: "Enriching Reality Through AR"
+    prefix: "E"
+    #icon: "📱"                               # Mobile phone emoji
+    color: "#f59e0b"                         # Amber-500
+    pages:
+      - "E1.-Fundamentals-of-AR"
+      - "E2.-AR-Foundation"
+      - "E3.-Mobile-AR:-Spatial-Awareness"
+      - "E4.-Mobile-AR:-Tracking"
+      - "E5.-Mobile-AR:-Anchors"
+      - "E6.-Wearable-AR:-Spatial-Awareness"
+      - "E7.-Wearable-AR:-Tracking-&-Anchors"
+      - "E8.-Wearable-AR:-Multimodal-Input"
+
+# =============================================================================
+# THEME CUSTOMIZATION
+# =============================================================================
+# Custom color scheme for your site's visual branding
+# These values are used in your CSS for consistent theming
+
+theme_color: "#6366f1"    # Primary brand color (indigo-500)
+                          # Used for buttons, links, accents
+                          
+accent_color: "#ec4899"   # Secondary brand color (pink-500)
+                          # Used for highlights, gradients, call-to-actions
+
+# =============================================================================
+# HOW THIS WORKS TOGETHER
+# =============================================================================
+# 1. Jekyll reads this config file when building your site
+# 2. Processes all .md files using the kramdown markdown processor  
+# 3. Applies the 'page' layout to all markdown files automatically
+# 4. Generates syntax-highlighted code blocks using rouge
+# 5. Compiles your SCSS files from _sass/ directory
+# 6. Makes nav_sections data available to your homepage template
+# 7. Creates SEO-optimized HTML with proper meta tags
+# 8. Serves everything at https://akhilaji14.github.io/XRE
+
+# =============================================================================
+# TROUBLESHOOTING
+# =============================================================================
+# Common issues and solutions:
+#
+# Problem: CSS not loading
+# Solution: Check that baseurl matches your repository name exactly
+#
+# Problem: 404 errors on pages  
+# Solution: Ensure .md files are in root directory with proper front matter
+#
+# Problem: Build failures
+# Solution: Check GitHub Actions tab for error details
+#
+# Problem: Images not displaying
+# Solution: Use relative URLs with {{ "/assets/images/file.jpg" | relative_url }}
+#
+# =============================================================================

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if page.title %}{{ page.title }} - {% endif %}{{ site.title }}</title>
+    <meta name="description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🥽</text></svg>">
+    
+    {% seo %}
+</head>
+<body>
+    <div class="site-wrapper">
+        <!-- Header -->
+        <header class="site-header">
+            <div class="container">
+                <div class="header-content">
+                    <a href="{{ '/' | relative_url }}" class="logo">
+                        <span class="logo-icon"></span>
+                        <span class="logo-text">{{ site.title }}</span>
+                    </a>
+                    
+                    <nav class="nav">
+                        <a href="{{ '/' | relative_url }}" class="nav-link {% if page.url == '/' %}active{% endif %}">Home</a>
+                        <a href="{{ '/about' | relative_url }}" class="nav-link {% if page.url == '/about/' %}active{% endif %}">Syllabus</a>
+                        <a href="https://github.gatech.edu/mmoghaddam3/XRE" class="nav-link" target="_blank">GitHub</a>
+                    </nav>
+                    
+                    <button class="mobile-menu-toggle" aria-label="Toggle navigation">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            {{ content }}
+        </main>
+
+        <!-- Footer -->
+        <footer class="site-footer">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-text">
+                        <p>&copy; {{ 'now' | date: "%Y" }} {{ site.title }}.</p>
+                        <p><a href="https://sail.coe.gatech.edu" target="_blank">Symbiotic & Augmented Intelligence Laboratory</a> @ Georgia Tech.</p>
+                    </div>
+                    <div class="footer-links">
+                        <!--<a href="{{ '/feed.xml' | relative_url }}" target="_blank">RSS</a> -->
+                        <a href="https://github.gatech.edu/mmoghaddam3/XRE" target="_blank">GitHub</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="{{ '/assets/js/main.js' | relative_url }}"></script>
+</body>
+</html>
