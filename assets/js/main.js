@@ -315,12 +315,11 @@ function enhanceBlockquotes() {
     });
 }
 
-// Update breadcrumb navigation
+// Update breadcrumb navigation and TOC header
 function updateBreadcrumb() {
     const breadcrumbSection = document.querySelector('.breadcrumb-section');
     const breadcrumbPage = document.querySelector('.breadcrumb-page');
-    
-    if (!breadcrumbSection || !breadcrumbPage) return;
+    const tocHeader = document.querySelector('.toc h3');
     
     const pageTitle = document.querySelector('.page-title')?.textContent || document.title;
     
@@ -339,13 +338,26 @@ function updateBreadcrumb() {
     const sectionName = sectionMap[sectionPrefix];
     
     if (sectionName) {
-        breadcrumbSection.textContent = sectionName;
-        breadcrumbPage.textContent = pageTitle;
+        // Update breadcrumb
+        if (breadcrumbSection && breadcrumbPage) {
+            breadcrumbSection.textContent = sectionName;
+            breadcrumbPage.textContent = pageTitle;
+        }
+        
+        // Update TOC header with module name
+        if (tocHeader) {
+            tocHeader.textContent = sectionName;
+        }
     } else {
         // Hide breadcrumb if not a section page
         const breadcrumbNav = document.querySelector('.breadcrumb-nav');
         if (breadcrumbNav) {
             breadcrumbNav.style.display = 'none';
+        }
+        
+        // Keep default TOC header for non-section pages
+        if (tocHeader) {
+            tocHeader.textContent = 'Table of Contents';
         }
     }
 }
