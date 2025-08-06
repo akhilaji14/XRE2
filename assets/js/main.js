@@ -64,6 +64,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Generate table of contents
     generateTableOfContents();
+    // Update breadcrumb navigation
+    updateBreadcrumb();
     // Scroll progress indicator
     createScrollProgress();
     // Add copy buttons to code blocks
@@ -311,4 +313,39 @@ function enhanceBlockquotes() {
             blockquote.classList.add('prep-section');
         }
     });
+}
+
+// Update breadcrumb navigation
+function updateBreadcrumb() {
+    const breadcrumbSection = document.querySelector('.breadcrumb-section');
+    const breadcrumbPage = document.querySelector('.breadcrumb-page');
+    
+    if (!breadcrumbSection || !breadcrumbPage) return;
+    
+    const pageTitle = document.querySelector('.page-title')?.textContent || document.title;
+    
+    // Map section prefixes to section names
+    const sectionMap = {
+        'A': 'Architecting XR for Engineering',
+        'B': 'Building Real-Time 3D Worlds', 
+        'C': 'C# for Custom XR Experiences',
+        'D': 'Developing Virtual Worlds in VR',
+        'E': 'Enriching Reality Through AR',
+        'P': 'XRE Capstone Team Project'
+    };
+    
+    // Extract section prefix from page title
+    const sectionPrefix = pageTitle.charAt(0);
+    const sectionName = sectionMap[sectionPrefix];
+    
+    if (sectionName) {
+        breadcrumbSection.textContent = sectionName;
+        breadcrumbPage.textContent = pageTitle;
+    } else {
+        // Hide breadcrumb if not a section page
+        const breadcrumbNav = document.querySelector('.breadcrumb-nav');
+        if (breadcrumbNav) {
+            breadcrumbNav.style.display = 'none';
+        }
+    }
 }

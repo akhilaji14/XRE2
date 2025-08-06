@@ -589,7 +589,7 @@ body {
 // Improved Table of Contents
 .toc {
   margin-bottom: 2rem;
-  max-height: 60vh;
+  max-height: calc(100vh - 200px); /* Make TOC as tall as possible */
   overflow-y: auto;
   overflow-x: hidden;
   border-radius: var(--radius);
@@ -1078,10 +1078,40 @@ ul.toc-sublist-2 {
   }
 }
 
+// Breadcrumb Navigation
+.breadcrumb-nav {
+  border-top: 1px solid var(--border);
+  padding: 1.5rem 2rem;
+  background: var(--bg-secondary);
+}
+
+.breadcrumb-content {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.breadcrumb-section {
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.breadcrumb-separator {
+  color: var(--text-muted);
+  font-weight: 400;
+}
+
+.breadcrumb-page {
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
 // Mobile responsiveness
 @media (max-width: 1024px) {
   .toc {
-    max-height: 40vh;
+    max-height: 50vh; /* Taller on tablet */
   }
 }
 
@@ -1135,7 +1165,7 @@ ul.toc-sublist-2 {
   }
 
   .toc {
-    max-height: 30vh;
+    max-height: 40vh; /* Keep reasonable height on mobile */
   }
   
   .toc-link {

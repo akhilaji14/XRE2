@@ -53,48 +53,13 @@ layout: default
                         {{ content }}
                     </div>
 
-                    <!-- Page Navigation -->
-                    <nav class="page-nav">
-                        {% assign current_section = page.title | slice: 0, 1 %}
-                        {% for section in site.nav_sections %}
-                            {% if section.prefix == current_section %}
-                                {% assign section_pages = section.pages %}
-                                {% for page_name in section_pages %}
-                                    {% assign page_file = page_name | append: '.md' %}
-                                    {% for doc in site.docs %}
-                                        {% if doc.name == page_file and doc.url == page.url %}
-                                            {% assign current_index = forloop.index0 %}
-                                            {% break %}
-                                        {% endif %}
-                                    {% endfor %}
-                                {% endfor %}
-                                
-                                {% if current_index > 0 %}
-                                    {% assign prev_page_name = section_pages[current_index-1] | append: '.md' %}
-                                    {% for doc in site.docs %}
-                                        {% if doc.name == prev_page_name %}
-                                        <a href="{{ doc.url | relative_url }}" class="page-nav-link prev">
-                                            <span class="nav-label">Previous</span>
-                                            <span class="nav-title">{{ doc.title }}</span>
-                                        </a>
-                                        {% endif %}
-                                    {% endfor %}
-                                {% endif %}
-                                
-                                {% assign next_index = current_index | plus: 1 %}
-                                {% if next_index < section_pages.size %}
-                                    {% assign next_page_name = section_pages[next_index] | append: '.md' %}
-                                    {% for doc in site.docs %}
-                                        {% if doc.name == next_page_name %}
-                                        <a href="{{ doc.url | relative_url }}" class="page-nav-link next">
-                                            <span class="nav-label">Next</span>
-                                            <span class="nav-title">{{ doc.title }}</span>
-                                        </a>
-                                        {% endif %}
-                                    {% endfor %}
-                                {% endif %}
-                            {% endif %}
-                        {% endfor %}
+                    <!-- Breadcrumb Navigation -->
+                    <nav class="breadcrumb-nav">
+                        <div class="breadcrumb-content">
+                            <span class="breadcrumb-section"></span>
+                            <span class="breadcrumb-separator">></span>
+                            <span class="breadcrumb-page"></span>
+                        </div>
                     </nav>
                 </article>
             </div>
