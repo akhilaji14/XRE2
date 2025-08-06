@@ -1041,8 +1041,9 @@ ul.toc-sublist-2 {
 }
 
 .prep-section {
-  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%) !important;
-  border-left-color: var(--accent) !important;
+  /* Use same background as regular blockquotes */
+  background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%) !important;
+  border-left-color: var(--primary) !important;
 }
 
 .prep-section::before {
