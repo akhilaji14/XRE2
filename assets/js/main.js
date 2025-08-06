@@ -9,6 +9,32 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // Simple Theme Toggle
+    const themeToggle = document.getElementById('themeToggle');
+    if (themeToggle) {
+        // Set initial theme text
+        updateThemeToggleText();
+        
+        themeToggle.addEventListener('click', function() {
+            // Toggle between light and dark mode
+            if (document.documentElement.getAttribute('data-theme') === 'dark') {
+                document.documentElement.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+            }
+            updateThemeToggleText();
+        });
+    }
+
+    // Load saved theme on page load
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        updateThemeToggleText();
+    }
+
     // Search functionality
     const searchBox = document.getElementById('searchBox');
     const sectionCards = document.querySelectorAll('.section-card');
@@ -45,6 +71,14 @@ document.addEventListener('DOMContentLoaded', function() {
     // Enhance blockquotes (prep sections)
     enhanceBlockquotes();
 });
+
+function updateThemeToggleText() {
+    const themeToggle = document.getElementById('themeToggle');
+    if (!themeToggle) return;
+    
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    themeToggle.innerHTML = isDark ? '☀️ Light' : '🌙 Dark';
+}
 
 // Improved table of contents with inline toggles
 function generateTableOfContents() {
