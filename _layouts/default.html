@@ -61,7 +61,10 @@
                 <div class="footer-content">
                     <div class="footer-text">
                         <p>&copy; {{ 'now' | date: "%Y" }} {{ site.title }}.</p>
-                        <p><a href="https://sail.coe.gatech.edu" target="_blank">Symbiotic & Augmented Intelligence Laboratory</a> @ Georgia Tech.</p>
+                        <p>
+                            <img src="{{ '/assets/images/sail-logo.svg' | relative_url }}" alt="SAIL Lab" class="sail-logo">
+                            <a href="https://sail.coe.gatech.edu" target="_blank">Symbiotic & Augmented Intelligence Laboratory</a> @ Georgia Tech.
+                        </p>
                     </div>
                     <div class="footer-links">
                         <!--<a href="{{ '/feed.xml' | relative_url }}" target="_blank">RSS</a> -->

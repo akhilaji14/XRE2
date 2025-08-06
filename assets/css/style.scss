@@ -532,6 +532,19 @@ body {
   text-decoration: underline;
 }
 
+.sail-logo {
+  height: 20px;
+  width: auto;
+  margin-right: 0.5rem;
+  vertical-align: middle;
+  opacity: 0.8;
+  transition: opacity 0.2s ease;
+}
+
+.sail-logo:hover {
+  opacity: 1;
+}
+
 .footer-links {
   display: flex;
   gap: 1.5rem;
