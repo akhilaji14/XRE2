@@ -1,159 +1,160 @@
-// =============================================================================
-// ENHANCED TABLE OF CONTENTS (IMPROVED VERSION WITH BETTER ARROW POSITIONING)
-// =============================================================================
+document.addEventListener('DOMContentLoaded', function() {
+    // Mobile menu toggle
+    const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+    const nav = document.querySelector('.nav');
+    if (mobileMenuToggle && nav) {
+        mobileMenuToggle.addEventListener('click', function() {
+            nav.classList.toggle('active');
+            mobileMenuToggle.classList.toggle('active');
+        });
+    }
 
-function generateEnhancedTableOfContents() {
+    // Search functionality
+    const searchBox = document.getElementById('searchBox');
+    const sectionCards = document.querySelectorAll('.section-card');
+    if (searchBox && sectionCards.length > 0) {
+        searchBox.addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            sectionCards.forEach(card => {
+                const title = card.querySelector('.section-title').textContent.toLowerCase();
+                const links = Array.from(card.querySelectorAll('.section-links a'))
+                    .map(link => link.textContent.toLowerCase()).join(' ');
+                const isMatch = title.includes(searchTerm) || links.includes(searchTerm);
+                card.style.display = isMatch ? 'block' : 'none';
+            });
+        });
+    }
+
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    });
+
+    // Generate table of contents
+    generateTableOfContents();
+    // Scroll progress indicator
+    createScrollProgress();
+    // Add copy buttons to code blocks
+    addCopyButtonsToCodeBlocks();
+    // Enhance blockquotes (prep sections)
+    enhanceBlockquotes();
+});
+
+// Improved table of contents with inline toggles
+function generateTableOfContents() {
     const tocContent = document.getElementById('toc-content');
-    const headings = document.querySelectorAll('.prose h1, .prose h2, .prose h3, .prose h4');
-    
+    const headings = document.querySelectorAll('.prose h1, .prose h2, .prose h3');
     if (!tocContent || headings.length === 0) return;
-    
-    // Create scrollable wrapper
-    const tocWrapper = document.createElement('div');
-    tocWrapper.className = 'toc-wrapper';
-    
+
     const ul = document.createElement('ul');
-    ul.className = 'toc-list';
-    
-    let currentSection = null;
-    let currentSubList = null;
-    let currentH2Section = null;
-    let currentH2SubList = null;
-    
+    ul.className = 'toc-root';
+    let lastH1Li = null;
+    let lastH2Li = null;
+
     headings.forEach((heading, index) => {
-        const level = parseInt(heading.tagName.substring(1)); // h1 = 1, h2 = 2, etc.
-        
-        // Create an ID for the heading if it doesn't have one
-        if (!heading.id) {
-            heading.id = 'heading-' + index;
-        }
-        
+        if (!heading.id) heading.id = `heading-${index}`;
+        const level = heading.tagName.toLowerCase();
         const li = document.createElement('li');
-        li.className = `toc-item toc-level-${level}`;
+        li.className = `toc-item toc-${level}`;
         
-        if (level === 1) {
-            // H1 headings are top-level sections (collapsible)
-            currentSection = li;
-            li.className += ' toc-section';
+        if (level === 'h1') {
+            // Create the link with inline toggle
+            const a = document.createElement('a');
+            a.href = `#${heading.id}`;
+            a.className = 'toc-link';
             
-            const link = document.createElement('a');
-            link.href = '#' + heading.id;
-            link.textContent = heading.textContent;
-            link.className = 'toc-link toc-main-link';
+            // Create toggle button
+            const toggle = document.createElement('button');
+            toggle.className = 'toc-toggle';
+            toggle.innerHTML = '▼';
+            toggle.setAttribute('aria-label', 'Toggle subsection');
             
-            const arrow = document.createElement('span');
-            arrow.className = 'toc-arrow';
-            arrow.innerHTML = '▼';
+            // Create text span
+            const textSpan = document.createElement('span');
+            textSpan.textContent = heading.textContent;
             
-            // Create container for link and arrow
-            const linkContainer = document.createElement('div');
-            linkContainer.className = 'toc-section-header';
-            linkContainer.appendChild(link);
-            linkContainer.appendChild(arrow);
+            // Append toggle and text to link
+            a.appendChild(toggle);
+            a.appendChild(textSpan);
             
-            li.appendChild(linkContainer);
+            // Create sublist
+            const subUl = document.createElement('ul');
+            subUl.className = 'toc-sublist';
+            subUl.style.display = 'block';
             
-            // Create sub-list for h2, h3, h4 under this h1
-            currentSubList = document.createElement('ul');
-            currentSubList.className = 'toc-sublist';
-            li.appendChild(currentSubList);
-            
-            // Better Click Behavior: Only the arrow is clickable for expand/collapse
-            arrow.addEventListener('click', function(e) {
+            // Toggle functionality
+            toggle.addEventListener('click', (e) => {
                 e.preventDefault();
                 e.stopPropagation();
-                
-                const isExpanded = li.classList.contains('expanded');
-                
-                if (isExpanded) {
-                    li.classList.remove('expanded');
-                    arrow.innerHTML = '▶';
-                } else {
-                    li.classList.add('expanded');
-                    arrow.innerHTML = '▼';
-                }
+                const isHidden = subUl.style.display === 'none';
+                subUl.style.display = isHidden ? 'block' : 'none';
+                toggle.innerHTML = isHidden ? '▼' : '▶';
+                toggle.setAttribute('aria-expanded', isHidden ? 'true' : 'false');
             });
             
-            // Allow clicking the title to navigate while preventing expand/collapse
-            link.addEventListener('click', function(e) {
-                e.stopPropagation(); // Don't trigger arrow click
-            });
-            
-            // Start expanded
-            li.classList.add('expanded');
-            
+            li.appendChild(a);
+            li.appendChild(subUl);
             ul.appendChild(li);
-            currentH2Section = null;
-            currentH2SubList = null;
+            lastH1Li = li;
+            lastH2Li = null;
             
-        } else if (level === 2 && currentSubList) {
-            // H2 are sub-items under H1
-            const subLi = document.createElement('li');
-            subLi.className = `toc-item toc-level-${level} toc-h2-section`;
+        } else if (level === 'h2' && lastH1Li) {
+            const parentSub = lastH1Li.querySelector('ul.toc-sublist');
+            const a = document.createElement('a');
+            a.href = `#${heading.id}`;
+            a.className = 'toc-link';
+            a.textContent = heading.textContent;
             
-            const link = document.createElement('a');
-            link.href = '#' + heading.id;
-            link.textContent = heading.textContent;
-            link.className = 'toc-link toc-sub-link';
+            li.appendChild(a);
             
-            subLi.appendChild(link);
-            currentSubList.appendChild(subLi);
-            currentH2Section = subLi;
+            // Create sub-sublist for h3s
+            const subSubUl = document.createElement('ul');
+            subSubUl.className = 'toc-sublist toc-sublist-2';
+            subSubUl.style.display = 'block';
+            li.appendChild(subSubUl);
             
-            // Create sub-list for potential H3s
-            currentH2SubList = document.createElement('ul');
-            currentH2SubList.className = 'toc-h3-list';
-            subLi.appendChild(currentH2SubList);
+            parentSub.appendChild(li);
+            lastH2Li = li;
             
-        } else if (level === 3 && currentH2SubList) {
-            // H3 goes under the current H2
-            const h3Li = document.createElement('li');
-            h3Li.className = `toc-item toc-level-${level}`;
+        } else if (level === 'h3' && lastH2Li) {
+            const subSub = lastH2Li.querySelector('ul.toc-sublist-2');
+            const a = document.createElement('a');
+            a.href = `#${heading.id}`;
+            a.className = 'toc-link';
+            a.textContent = heading.textContent;
             
-            const link = document.createElement('a');
-            link.href = '#' + heading.id;
-            link.textContent = heading.textContent;
-            link.className = 'toc-link toc-sub-link toc-h3-link';
-            
-            h3Li.appendChild(link);
-            currentH2SubList.appendChild(h3Li);
-            
-        } else if (level === 4 && currentH2SubList) {
-            // H4 also goes under current H2 (treat similar to H3)
-            const h4Li = document.createElement('li');
-            h4Li.className = `toc-item toc-level-${level}`;
-            
-            const link = document.createElement('a');
-            link.href = '#' + heading.id;
-            link.textContent = heading.textContent;
-            link.className = 'toc-link toc-sub-link toc-h4-link';
-            
-            h4Li.appendChild(link);
-            currentH2SubList.appendChild(h4Li);
+            li.appendChild(a);
+            subSub.appendChild(li);
         }
     });
-    
-    tocWrapper.appendChild(ul);
+
     tocContent.innerHTML = '';
-    tocContent.appendChild(tocWrapper);
+    tocContent.appendChild(ul);
     
-    // Add scroll listener for active link highlighting
-    window.addEventListener('scroll', highlightActiveTOCLink);
-    setTimeout(highlightActiveTOCLink, 100);
+    // Add active link highlighting based on scroll position
+    highlightActiveSection();
+    window.addEventListener('scroll', highlightActiveSection);
 }
 
-// Highlight active TOC link based on scroll position
-function highlightActiveTOCLink() {
-    const headings = document.querySelectorAll('.prose h1, .prose h2, .prose h3, .prose h4');
+// Highlight the active section based on scroll position
+function highlightActiveSection() {
+    const headings = document.querySelectorAll('.prose h1, .prose h2, .prose h3');
     const tocLinks = document.querySelectorAll('.toc-link');
     
-    let activeHeading = null;
-    const scrollTop = window.pageYOffset + 150; // Account for sticky header
+    if (!headings.length || !tocLinks.length) return;
     
-    // Find the currently visible heading
+    let current = '';
+    const scrollPosition = window.scrollY + 120; // Offset for header
+    
     headings.forEach(heading => {
-        if (heading.offsetTop <= scrollTop) {
-            activeHeading = heading;
+        if (heading.offsetTop <= scrollPosition) {
+            current = heading.id;
         }
     });
     
@@ -161,18 +162,119 @@ function highlightActiveTOCLink() {
     tocLinks.forEach(link => link.classList.remove('active'));
     
     // Add active class to current link
-    if (activeHeading) {
-        const activeLink = document.querySelector(`.toc-link[href="#${activeHeading.id}"]`);
+    if (current) {
+        const activeLink = document.querySelector(`.toc-link[href="#${current}"]`);
         if (activeLink) {
             activeLink.classList.add('active');
             
-            // Ensure the active link's section is expanded
-            const section = activeLink.closest('.toc-section');
-            if (section && !section.classList.contains('expanded')) {
-                const arrow = section.querySelector('.toc-arrow');
-                section.classList.add('expanded');
-                if (arrow) arrow.innerHTML = '▼';
+            // Scroll the active link into view within the TOC
+            const tocContainer = document.querySelector('.toc');
+            if (tocContainer) {
+                const linkRect = activeLink.getBoundingClientRect();
+                const tocRect = tocContainer.getBoundingClientRect();
+                
+                if (linkRect.top < tocRect.top || linkRect.bottom > tocRect.bottom) {
+                    activeLink.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'center'
+                    });
+                }
             }
         }
     }
+}
+
+// Create scroll progress indicator
+function createScrollProgress() {
+    const progressBar = document.createElement('div');
+    progressBar.className = 'scroll-progress';
+    progressBar.innerHTML = '<div class="scroll-progress-bar"></div>';
+    document.body.appendChild(progressBar);
+    const progressBarFill = progressBar.querySelector('.scroll-progress-bar');
+    window.addEventListener('scroll', () => {
+        const scrollTop = window.pageYOffset;
+        const docHeight = document.body.offsetHeight - window.innerHeight;
+        const scrollPercent = (scrollTop / docHeight) * 100;
+        progressBarFill.style.width = Math.min(scrollPercent, 100) + '%';
+    });
+}
+
+// Add copy buttons to all code blocks
+function addCopyButtonsToCodeBlocks() {
+    const codeBlocks = document.querySelectorAll('.prose pre');
+    codeBlocks.forEach((block, index) => {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'code-block-wrapper';
+        block.parentNode.insertBefore(wrapper, block);
+        wrapper.appendChild(block);
+        const copyButton = document.createElement('button');
+        copyButton.className = 'copy-button';
+        copyButton.innerHTML = `
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="m5 15-4-4c0-1.1.9-2 2-2h4"></path>
+            </svg>
+            Copy
+        `;
+        copyButton.addEventListener('click', async () => {
+            const code = block.querySelector('code');
+            const text = code ? code.textContent : block.textContent;
+            try {
+                await navigator.clipboard.writeText(text);
+                copyButton.innerHTML = `
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="20,6 9,17 4,12"></polyline>
+                    </svg>
+                    Copied!
+                `;
+                copyButton.classList.add('copied');
+                setTimeout(() => {
+                    copyButton.innerHTML = `
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="m5 15-4-4c0-1.1.9-2 2-2h4"></path>
+                        </svg>
+                        Copy
+                    `;
+                    copyButton.classList.remove('copied');
+                }, 2000);
+            } catch (err) {
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                copyButton.innerHTML = `
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="20,6 9,17 4,12"></polyline>
+                    </svg>
+                    Copied!
+                `;
+                copyButton.classList.add('copied');
+                setTimeout(() => {
+                    copyButton.innerHTML = `
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="m5 15-4-4c0-1.1.9-2 2-2h4"></path>
+                        </svg>
+                        Copy
+                    `;
+                    copyButton.classList.remove('copied');
+                }, 2000);
+            }
+        });
+        wrapper.appendChild(copyButton);
+    });
+}
+
+// Enhance blockquotes (your prep sections)
+function enhanceBlockquotes() {
+    const blockquotes = document.querySelectorAll('.prose blockquote');
+    blockquotes.forEach(blockquote => {
+        const firstH1 = blockquote.querySelector('h1');
+        if (firstH1 && firstH1.textContent.includes('Pre-Class Prep')) {
+            blockquote.classList.add('prep-section');
+        }
+    });
 }
