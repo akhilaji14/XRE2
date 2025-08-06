@@ -77,7 +77,7 @@ function updateThemeToggleText() {
     if (!themeToggle) return;
     
     const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-    themeToggle.innerHTML = isDark ? '☀️ Light' : '🌙 Dark';
+    themeToggle.innerHTML = isDark ? 'Light' : 'Dark';
 }
 
 // Improved table of contents with inline toggles
