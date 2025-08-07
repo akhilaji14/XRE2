@@ -626,6 +626,7 @@ body {
 
 #toc-content {
   padding: 0;
+  margin: 0;
 }
 
 ul.toc-root,
@@ -637,7 +638,11 @@ ul.toc-sublist-2 {
 }
 
 .toc-item {
-  margin-bottom: 0.125rem;
+  margin-bottom: 0;
+}
+
+.toc-item:last-child {
+  margin-bottom: 0;
 }
 
 .toc-link {
