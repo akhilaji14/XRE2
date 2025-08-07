@@ -630,6 +630,7 @@ body {
   margin: 0;
   flex: 1;
   overflow-y: auto;
+  min-height: 0;
 }
 
 #toc-content > ul {
