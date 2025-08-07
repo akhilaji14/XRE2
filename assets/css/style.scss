@@ -638,13 +638,18 @@ body {
 }
 
 #toc-content ul:last-child {
-  margin-bottom: 0;
-  padding-bottom: 0;
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
 }
 
 #toc-content li:last-child {
-  margin-bottom: 0;
-  padding-bottom: 0;
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.toc-item:last-child .toc-link {
+  margin-bottom: 0 !important;
+  padding-bottom: 0.5rem !important;
 }
 
 ul.toc-root,
