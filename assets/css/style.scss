@@ -632,6 +632,21 @@ body {
   overflow-y: auto;
 }
 
+#toc-content > ul {
+  margin: 0;
+  padding: 0;
+}
+
+#toc-content ul:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+#toc-content li:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
 ul.toc-root,
 ul.toc-sublist,
 ul.toc-sublist-2 {
