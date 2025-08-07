@@ -12,30 +12,6 @@ layout: default
                         <h3>Table of Contents</h3>
                         <div id="toc-content"></div>
                     </div>
-                    
-                    <div class="section-nav">
-                        {% assign current_section = page.title | slice: 0, 1 %}
-                        {% for section in site.nav_sections %}
-                            {% if section.prefix == current_section %}
-                            <h4>{{ section.icon }} {{ section.title }}</h4>
-                            <ul class="nav-list">
-                                {% for page_name in section.pages %}
-                                    {% assign page_file = page_name | append: '.md' %}
-                                    {% for doc in site.docs %}
-                                        {% if doc.name == page_file %}
-                                        <li>
-                                            <a href="{{ doc.url | relative_url }}" 
-                                               class="nav-link {% if doc.url == page.url %}active{% endif %}">
-                                                {{ doc.title }}
-                                            </a>
-                                        </li>
-                                        {% endif %}
-                                    {% endfor %}
-                                {% endfor %}
-                            </ul>
-                            {% endif %}
-                        {% endfor %}
-                    </div>
                 </div>
             </aside>
 
