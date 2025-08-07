@@ -344,9 +344,9 @@ function updateBreadcrumb() {
             breadcrumbPage.textContent = pageTitle;
         }
         
-        // Update TOC header with module name
+        // Update TOC header with current page/session name instead of module name
         if (tocHeader) {
-            tocHeader.textContent = sectionName;
+            tocHeader.textContent = pageTitle;
         }
     } else {
         // Hide breadcrumb if not a section page
