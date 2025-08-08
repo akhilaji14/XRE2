@@ -601,7 +601,7 @@ body {
 
 // Improved Table of Contents
 .toc {
-  margin-bottom: 2rem;
+  margin-bottom: 0; /* Remove extra gap under TOC */
   max-height: calc(100vh - 200px); /* Make TOC as tall as possible */
   overflow-y: auto;
   overflow-x: hidden;
