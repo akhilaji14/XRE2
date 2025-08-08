@@ -608,6 +608,9 @@ body {
   border-radius: var(--radius);
   border: 1px solid var(--border-light);
   background: var(--bg-secondary);
+  /* Ensure header and content stack without extra bottom space */
+  display: flex;
+  flex-direction: column;
 }
 
 .toc h3 {
@@ -627,7 +630,8 @@ body {
 
 #toc-content {
   padding: 0;
-  margin: 0 0 -20px 0;
+  /* Remove artificial bottom spacing */
+  margin: 0;
   flex: 1;
   overflow-y: auto;
   min-height: 0;
@@ -650,7 +654,7 @@ body {
 
 .toc-item:last-child .toc-link {
   margin-bottom: 0 !important;
-  padding-bottom: 0.5rem !important;
+  padding-bottom: 0 !important;
 }
 
 ul.toc-root,
