@@ -608,9 +608,8 @@ body {
   border-radius: var(--radius);
   border: 1px solid var(--border-light);
   background: var(--bg-secondary);
-  /* Ensure header and content stack without extra bottom space */
-  display: flex;
-  flex-direction: column;
+  /* Let height shrink-to-fit so no empty space appears */
+  display: block;
 }
 
 .toc h3 {
@@ -632,7 +631,8 @@ body {
   padding: 0;
   /* Remove artificial bottom spacing */
   margin: 0;
-  flex: 1;
+  /* Do not stretch to fill container height */
+  flex: initial;
   overflow-y: auto;
   min-height: 0;
 }
@@ -640,6 +640,16 @@ body {
 #toc-content > ul {
   margin: 0;
   padding: 0;
+}
+
+/* Ensure no residual spacing from nested lists/items */
+#toc-content ul {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+#toc-content li {
+  margin-bottom: 0 !important;
 }
 
 #toc-content ul:last-child {
